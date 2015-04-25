@@ -2,6 +2,9 @@
 <ServiceConfiguration serviceName="LagaSjalv" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
   <Role name="MvcWebRole1">
     <Instances count="1" />
-    <ConfigurationSettings />
+    <ConfigurationSettings>
+      <Setting name="ImageConnector" value="UseDevelopmentStorage=true" />
+      <Setting name="ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

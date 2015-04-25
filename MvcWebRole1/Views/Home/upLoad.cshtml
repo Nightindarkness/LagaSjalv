@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "upLoad";
+}
+
+<h2>upLoad</h2>
+<h2>@ViewBag.Message</h2>
+
+
+
+    @using (Html.BeginForm("upLoad", "Home", FormMethod.Get))
+    {
+    
+   
+    
+   <!--<input type="submit" value="upLoad" />-->
+    }
+
+
+    @using (Html.BeginForm("upLoad", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Label("Select a category")
+    @Html.DropDownList("kategori", "-Select Category-")
+    @Html.Label("receptnamn")
+    @Html.TextBox("receptnamn")
+    @Html.Label("inloggningsnamn")
+    @Html.TextBox("inloggningsnamn")
+     
+       
+    @Html.Label("Select a ingrediens")
+    @Html.DropDownList("ingrediens1", "-Select ingrediens-")
+    @Html.Label("ingrediensmangd")
+    @Html.TextBox("ingrediensmangd1")
+    @Html.Label("Select a mattenhet")
+    @Html.DropDownList("mattenhet1", "-Select mattenhet-")
+    @Html.Label("antal")
+    @Html.TextBox("antal")
+        <input type ="file" name ="image" value="image" />
+        <input type ="submit" value="upload" />
+    }
+
+<ul style ="list-style-type:none; padding:0;">
+    @foreach (var item in Model)
+    {
+        <img src="@item" alt="image here" width="100" height="100" />
+        <a  href="#" id="@item" onclick="deleteImage('@item');">Delete</a>
+    }
+</ul>
+
+<script>
+    function deleteImage(item) {
+        var url = "/Home/DeleteImage";
+        $.post(url, { Name: item }, function (data) {
+            window.location.href = "/Home/Upload";
+        });
+    }
+</script>

@@ -11,5 +11,9 @@
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
+    <ConfigurationSettings>
+      <Setting name="ImageConnector" />
+      <Setting name="ConnectionString" />
+    </ConfigurationSettings>
   </WebRole>
 </ServiceDefinition>
