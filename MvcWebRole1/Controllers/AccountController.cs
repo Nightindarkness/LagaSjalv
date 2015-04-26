@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using MvcWebRole1.Filters;
 using MvcWebRole1.Models;
+using System.Diagnostics;
 
 namespace MvcWebRole1.Controllers
 {
@@ -17,6 +18,35 @@ namespace MvcWebRole1.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterM m)
+        {
+            Debug.WriteLine("HHELL"+ModelState.IsValid);
+            if (ModelState.IsValid)
+            {
+                // Attempt to register the user
+                try
+                {
+                    WebSecurity.CreateUserAndAccount(m.UserName, m.Password, propertyValues: new {Email = m.Email });
+                    //Membership.CreateUser(m.UserName,m.Password,m.Email);
+                    
+                    WebSecurity.Login(m.UserName, m.Password);
+                    return RedirectToAction("upLoad", "Home");
+                    
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(m);
+        }
+
         //
         // GET: /Account/Login
 
@@ -72,7 +102,7 @@ namespace MvcWebRole1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register1(RegisterModel model)
         {
             if (ModelState.IsValid)
             {

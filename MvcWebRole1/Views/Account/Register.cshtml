@@ -1,10 +1,34 @@
-﻿@{
+﻿@model MvcWebRole1.Models.RegisterM
+@{
     ViewBag.Title = "Register";
 }
 
 <h2>Register</h2>
 
- @using (Html.BeginForm())
- {
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
 
- }
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.Label("Username")
+                @Html.TextBoxFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.Label("Password")
+                @Html.PasswordFor(m => m.Password)
+            </li>
+            <li>
+                @Html.Label("ConfirmPassword")
+                @Html.PasswordFor(m => m.ConfirmPassword)
+            </li>
+            <li>
+                @Html.Label("Email")
+                @Html.TextBoxFor(m => m.Email)
+            </li>
+        </ol>
+        <input type="submit" value="Register" />
+    </fieldset>
+}

@@ -41,7 +41,7 @@
 
 <ul style ="list-style-type:none; padding:0;">
     @foreach (var item in Model)
-    {
+    {   
         <img src="@item" alt="image here" width="100" height="100" />
         <a  href="#" id="@item" onclick="deleteImage('@item');">Delete</a>
     }

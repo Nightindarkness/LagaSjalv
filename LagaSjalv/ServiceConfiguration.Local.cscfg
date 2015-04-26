@@ -4,7 +4,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="ImageConnector" value="UseDevelopmentStorage=true" />
-      <Setting name="ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="ReceptConnection" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

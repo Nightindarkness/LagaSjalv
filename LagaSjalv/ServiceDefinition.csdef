@@ -13,7 +13,7 @@
     </Endpoints>
     <ConfigurationSettings>
       <Setting name="ImageConnector" />
-      <Setting name="ConnectionString" />
+      <Setting name="ReceptConnection" />
     </ConfigurationSettings>
   </WebRole>
 </ServiceDefinition>

@@ -99,8 +99,8 @@ namespace MvcWebRole1.Controllers
             CloudBlockBlob blob = blobContainer.GetBlockBlobReference(blobName);
             blob.UploadFromStream(image.InputStream);
 
-            CloudStorageAccount obj_Account = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
-           //CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
+           // CloudStorageAccount obj_Account = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+            CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
             CloudTableClient cloud_Table;
             CloudTable table;
             Recept obj_Entity = new Recept();
@@ -151,6 +151,31 @@ namespace MvcWebRole1.Controllers
             blob.Delete();
 
             return "File Deleted";
+        }
+
+        public ActionResult Search(){
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+             CloudConfigurationManager.GetSetting("ReceptConnection"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("Recept");
+            TableQuery<Recept> query = new TableQuery<Recept>();
+
+            CloudBlobContainer blobContainer = _blobStorageServices.GetCloudBlobContainer();
+            List<string> blobs = new List<string>();
+
+            ViewBag.Recipedata = table.ExecuteQuery(query);
+           // foreach (Recept entity in table.ExecuteQuery(query))
+           // {
+            //    Console.WriteLine("{0}, {1}\t{2}\t{3}", entity.PartitionKey, entity.RowKey,
+              //      entity, entity.PhoneNumber);
+           // }
+            foreach (var blobItem in blobContainer.ListBlobs())
+            {
+                blobs.Add(blobItem.Uri.ToString());
+            }
+            ViewBag.Blobs = blobs;
+            return View();
         }
 
        
