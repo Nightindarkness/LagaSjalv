@@ -19,22 +19,47 @@
 
     @using (Html.BeginForm("upLoad", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.Label("Select a category")
+        @Html.Label("Välj en kategori")
     @Html.DropDownList("kategori", "-Select Category-")
-    @Html.Label("receptnamn")
+    @Html.Label("Receptnamn")
     @Html.TextBox("receptnamn")
-    @Html.Label("inloggningsnamn")
+    @Html.Label("Inloggning")
     @Html.TextBox("inloggningsnamn")
      
        
     @Html.Label("Select a ingrediens")
     @Html.DropDownList("ingrediens1", "-Select ingrediens-")
-    @Html.Label("ingrediensmangd")
+    @Html.Label("Mängd")
     @Html.TextBox("ingrediensmangd1")
-    @Html.Label("Select a mattenhet")
+    @Html.Label("Välj mått")
     @Html.DropDownList("mattenhet1", "-Select mattenhet-")
-    @Html.Label("antal")
+    @Html.Label("Mängd")
+    @Html.TextBox("ingrediensmangd2")
+    @Html.Label("Välj mått")
+    @Html.DropDownList("mattenhet2", "-Select mattenhet-")
+    @Html.Label("Mängd")
+    @Html.TextBox("ingrediensmangd3")
+    @Html.Label("Välj mått")
+    @Html.DropDownList("mattenhet3", "-Select mattenhet-")
+    @Html.Label("Mängd")
+    @Html.TextBox("ingrediensmangd4")
+    @Html.Label("Välj mått")
+    @Html.DropDownList("mattenhet4", "-Select mattenhet-")
+    @Html.Label("Mängd")
+    @Html.TextBox("ingrediensmangd5")
+    @Html.Label("Välj mått")
+    @Html.DropDownList("mattenhet5", "-Select mattenhet-")
+    @Html.Label("Mängd")
+    @Html.TextBox("ingrediensmangd1")
+    @Html.Label("Välj mått")
+    @Html.DropDownList("mattenhet1", "-Select mattenhet-")
+    
+
+
+    @Html.Label("Antal portioner")
     @Html.TextBox("antal")
+    @Html.Label("Kommentar");
+    @Html.TextBox("kommentar", "", new { style = "width:auto" });
         <input type ="file" name ="image" value="image" />
         <input type ="submit" value="upload" />
     }
