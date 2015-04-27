@@ -50,40 +50,7 @@ namespace MvcWebRole1.Controllers
             ViewBag.mattenhet1 = new SelectList(matt1);
 
             if(!String.IsNullOrEmpty(kategori)){
-            /*CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ConnectionString"));
-            CloudTableClient cloud_Table;
-            CloudTable table;
-            Recept obj_Entity = new Recept();
-            TableOperation insertOperation;
-
-            cloud_Table = obj_Account.CreateCloudTableClient();
-            table = cloud_Table.GetTableReference("Recept");
-            table.CreateIfNotExists();
-
-            obj_Entity.ReceptNamn = receptnamn;
-            obj_Entity.Inloggnamn = inloggningsnamn;
-            if (ingrediens1.Equals("Mjölk"))
-            {
-                obj_Entity.mjolk = ingrediensmangd1;
-                obj_Entity.mjolkmatt = mattenhet1;
-            }
-            else if (ingrediens1.Equals("Salt"))
-            {
-                obj_Entity.salt = ingrediensmangd1;
-                obj_Entity.saltmatt = mattenhet1;
-            }
-            else if (ingrediens1.Equals("Ägg"))
-            {
-                obj_Entity.agg = ingrediensmangd1;
-                obj_Entity.aggmatt = mattenhet1;
-            }
-
-            obj_Entity.antal = int.Parse(antal);
-            obj_Entity.blobnamn = image;
-            obj_Entity.PartitionKey = kategori;
-            obj_Entity.RowKey = receptnamn;
-            insertOperation = TableOperation.Insert(obj_Entity);
-            table.Execute(insertOperation);*/
+            
         }
            
             return View(blobs);
@@ -153,13 +120,13 @@ namespace MvcWebRole1.Controllers
             return "File Deleted";
         }
 
-        public ActionResult Search(){
+        public ActionResult Search(string category){
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
              CloudConfigurationManager.GetSetting("ReceptConnection"));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("Recept");
-            TableQuery<Recept> query = new TableQuery<Recept>();
+            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, category));
 
             CloudBlobContainer blobContainer = _blobStorageServices.GetCloudBlobContainer();
             List<string> blobs = new List<string>();
@@ -175,6 +142,13 @@ namespace MvcWebRole1.Controllers
                 blobs.Add(blobItem.Uri.ToString());
             }
             ViewBag.Blobs = blobs;
+            return View();
+        }
+
+        public ActionResult DisplayRecipe(string RecipeName){
+            ViewBag.In = RecipeName;
+
+
             return View();
         }
 

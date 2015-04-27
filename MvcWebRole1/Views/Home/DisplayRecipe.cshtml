@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "DisplayRecipe";
+}
+
+<h2>DisplayRecipe</h2>
+@ViewBag.In
+
+@foreach (var itemData in ViewBag.recipeData )
+    {   
+        int i = 0;
+       // var data = ViewBag.recipeData;
+       // <a>@item</a> 
+        <div>@Html.ActionLink((string)itemData.ReceptNamn, "DisplayRecipe", "Home",  new {RecipeName = itemData.ReceptNamn }, null) </div>
+        foreach (var item in ViewBag.Blobs)
+        {
+            if(item.Contains(itemData.blobnamn)){
+            <img src="@item" alt="image here" width="300" height="300" />
+         }
+             
+            
+         }
+        
+         if(itemData.mjolk != null){
+        <div >Mjölk: @itemData.mjolk @itemData.mjolkmatt</div>
+             }
+             if(itemData.salt != null){
+        <div >Salt: @itemData.salt @itemData.saltmatt</div>
+             }
+             if(itemData.agg != null){
+        <div >Ägg: @itemData.agg @itemData.aggmatt</div>
+             }
+        
+    }
