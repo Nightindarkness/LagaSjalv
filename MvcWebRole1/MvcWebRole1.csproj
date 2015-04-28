@@ -330,6 +330,7 @@
     <Content Include="Views\Home\upLoad.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\DisplayRecipe.cshtml" />
+    <Content Include="Views\Account\AdminPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

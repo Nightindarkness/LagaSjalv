@@ -32,7 +32,7 @@ namespace MvcWebRole1.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(m.UserName, m.Password, propertyValues: new {Email = m.Email });
                     //Membership.CreateUser(m.UserName,m.Password,m.Email);
-                    
+                    Roles.AddUserToRole(m.UserName, "User");
                     WebSecurity.Login(m.UserName, m.Password);
                     return RedirectToAction("upLoad", "Home");
                     
@@ -356,6 +356,18 @@ namespace MvcWebRole1.Controllers
 
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
+        }
+
+        private UserProfile db = new UserProfile();
+
+        public ActionResult AdminPage()
+        {
+           
+
+
+            ViewBag.users = Roles.GetUsersInRole("User");
+
+            return View();
         }
 
         #region Helpers

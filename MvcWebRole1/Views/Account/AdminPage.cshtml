@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "AdminPage";
+}
+
+<h2>AdminPage</h2>
+
+ @using (Html.BeginForm("AdminPage", "Account", FormMethod.Get))
+ {
+        @Html.DropDownList("Users","Välj användare")
+     
+
+ }
