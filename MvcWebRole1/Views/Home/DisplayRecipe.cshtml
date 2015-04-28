@@ -3,18 +3,22 @@
 }
 
 <h2>DisplayRecipe</h2>
-@ViewBag.In
+
 
 @foreach (var itemData in ViewBag.recipeData )
     {   
         int i = 0;
        // var data = ViewBag.recipeData;
        // <a>@item</a> 
-        <div>@Html.ActionLink((string)itemData.ReceptNamn, "DisplayRecipe", "Home",  new {RecipeName = itemData.ReceptNamn }, null) </div>
+        if(itemData.ReceptNamn != null && itemData.antal != null && itemData.Inloggnamn !=null){
+        <div > @itemData.ReceptNamn för @itemData.antal personer</div>
+    <div>Uppladdad av @itemData.Inloggnamn</div>
+             }
+       
         foreach (var item in ViewBag.Blobs)
         {
             if(item.Contains(itemData.blobnamn)){
-            <img src="@item" alt="image here" width="400" height="400" />
+           <div> <img src="@item" alt="image here" width="400" height="400" /></div>
          }
              
             
@@ -29,5 +33,143 @@
              if(itemData.agg != null){
         <div >Ägg: @itemData.agg @itemData.aggmatt</div>
              }
-        
+             if(itemData.svartpeppar != null){
+        <div >Svartpeppar: @itemData.svartpeppar @itemData.svartpepparmatt</div>
+             }
+             if(itemData.curry != null){
+        <div >Curry: @itemData.curry @itemData.currymatt</div>
+             }
+             if(itemData.smor != null){
+        <div >Smör: @itemData.smor @itemData.smormatt</div>
+             }
+             if(itemData.vetemjol != null){
+        <div >Vetemjöl: @itemData.vetemjol @itemData.vetemjolmatt</div>
+             }
+             if(itemData.rogmjol != null){
+        <div >Rågmjöl: @itemData.rogmjol @itemData.rogmjolmatt</div>
+             }
+        if(itemData.vetemjolspecial != null){
+        <div >Vetemjöl Special: @itemData.vetemjolspecial @itemData.vetemjolspecialmatt</div>
+             }
+             if(itemData.brodsirap != null){
+        <div >Brödsirap: @itemData.brodsirap @itemData.brodsirapmatt</div>
+             }
+             if(itemData.vispgradde != null){
+        <div >Vispgrädde: @itemData.vispgradde @itemData.vispgraddematt</div>
+             }
+             if(itemData.choklad != null){
+        <div >Chocklad: @itemData.choklad @itemData.chokladmatt</div>
+             }
+             if(itemData.hallon != null){
+        <div >Hallon: @itemData.hallon @itemData.hallonmatt</div>
+             }
+             if(itemData.matyogurt != null){
+        <div >Matyoghurt: @itemData.matyogurt @itemData.matyogurtmatt</div>
+             }
+             if(itemData.strosocker != null){
+        <div >Strösocker: @itemData.strosocker @itemData.strosockermatt</div>
+             }
+             if(itemData.wokgronsaker != null){
+        <div >Wokgrönsaker: @itemData.wokgronsaker @itemData.wokgronsakermatt</div>
+             }
+             if(itemData.ris != null){
+        <div >Ris: @itemData.ris @itemData.rismatt</div>
+             }
+             if(itemData.potatis != null){
+        <div >Potatis: @itemData.potatis @itemData.potatismatt</div>
+             }
+             if(itemData.kycklingfile != null){
+        <div >Kycklingfile: @itemData.ycklingfile @itemData.kycklingfilematt</div>
+             }
+             if(itemData.honsbuljong != null){
+        <div >Hönsbuljong: @itemData.honsbuljong @itemData.honsbuljongmatt</div>
+             }
+             if(itemData.matlagningsgradde != null){
+        <div >Matlagningsgradde: @itemData.matlagningsgradde @itemData.matlagningsgraddematt</div>
+             }
+             if(itemData.cremefraiche != null){
+        <div >Creme Fraiche: @itemData.cremefraiche @itemData.cremefraichematt</div>
+             }
+             if(itemData.jast != null){
+        <div >Jäst: @itemData.jast @itemData.jastmatt</div>
+             }
+             if(itemData.honung != null){
+        <div >Honung: @itemData.honung @itemData.honungmatt</div>
+             }
+             if(itemData.vatten != null){
+        <div >Vatten: @itemData.vatten @itemData.vattenmatt</div>
+             }
+             if(itemData.graslok != null){
+        <div >Gräslök: @itemData.graslok @itemData.graslokmatt</div>
+             }
+             if(itemData.persilja != null){
+        <div >Persilja: @itemData.persilja @itemData.persiljamatt</div>
+             }
+             if(itemData.krossadetomater != null){
+        <div >Krossade tomater: @itemData.krossadetomater @itemData.krossadetomatermatt</div>
+             }
+             if(itemData.olivolja != null){
+        <div >Olivolja: @itemData.olivolja @itemData.olivoljamatt</div>
+             }
+             if(itemData.valmofron != null){
+        <div >Vallmofrön: @itemData.valmofron @itemData.valmofronmatt</div>
+             }
+             if(itemData.pasta != null){
+        <div >pasta: @itemData.pasta @itemData.pastamatt</div>
+             }
+             if(itemData.ost != null){
+        <div >Ost: @itemData.ost @itemData.ostmatt</div>
+             }
+             if(itemData.strobrod != null){
+        <div >Ströbröd: @itemData.strobrod @itemData.strobrodmatt</div>
+             }
+             if(itemData.lammkotletter != null){
+        <div >Lammkotletter: @itemData.lammkotletter @itemData.lammkotlettermatt</div>
+             }
+             if(itemData.lammfars != null){
+        <div >Lammfärs: @itemData.lammfars @itemData.lammfars</div>
+             }
+             if(itemData.rodlok != null){
+        <div >Rödlök: @itemData.rodlok @itemData.rodlok</div>
+             }
+             if(itemData.gullok != null){
+        <div >Gullök: @itemData.gullok @itemData.gullokmatt</div>
+             }
+             if(itemData.vitlok != null){
+        <div >Vitlök: @itemData.vitlok @itemData.vitlokmatt</div>
+             }
+             if(itemData.rosmarin != null){
+        <div >Rosmarin: @itemData.rosmarin @itemData.rosmarinmatt</div>
+             }
+             if(itemData.citron != null){
+        <div >Citron: @itemData.citron @itemData.citronmatt</div>
+             }
+             if(itemData.rodvin != null){
+        <div >Rödvin: @itemData.rodvin @itemData.rodvinmatt</div>
+             }
+             if(itemData.vittvin != null){
+        <div >Vitt vin: @itemData.vittvin @itemData.vittvinmatt</div>
+             }
+             if(itemData.schalottenlok != null){
+        <div >Schalottenlok: @itemData.schalottenlok @itemData.schalottenlokmatt</div>    
+             }
+             if(itemData.oxfile != null){
+        <div >Oxfile: @itemData.oxfile @itemData.oxfilematt</div>
+             }
+             if(itemData.lax != null){
+        <div >Lax: @itemData.lax @itemData.laxmatt</div>
+             }
+             if(itemData.spenat != null){
+        <div >Spenat: @itemData.spenat @itemData.spenatmatt</div>
+             }
+             
+             if(itemData.champinjoner != null){
+        <div >Champinjoner: @itemData.champinjoner @itemData.champinjonermatt</div>
+             }
+             if(itemData.kantareller != null){
+        <div >Kantareller: @itemData.kantareller @itemData.kantarellermatt</div>
+             }
+             if(itemData.Instruktioner != null){
+        <div >Instruktioner: @itemData.Instruktioner </div>
+             }
     }
