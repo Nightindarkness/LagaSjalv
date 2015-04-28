@@ -514,7 +514,7 @@ namespace MvcWebRole1.Controllers
             else if (ingrediens7.Equals("Spenat")) { obj_Entity.spenat = ingrediensmangd7; obj_Entity.spenatmatt = mattenhet7; }
             else if (ingrediens7.Equals("Champinjoner")) { obj_Entity.champinjoner = ingrediensmangd7; obj_Entity.champinjonermatt = mattenhet7; }
             else if (ingrediens7.Equals("Kantareller")) { obj_Entity.kantareller = ingrediensmangd7; obj_Entity.kantarellermatt = mattenhet7; }
-           
+
             obj_Entity.antal = int.Parse(antal);
             obj_Entity.Instruktioner = instruktioner;
             obj_Entity.blobnamn = blobName;
@@ -541,34 +541,83 @@ namespace MvcWebRole1.Controllers
             return "File Deleted";
         }
 
-        public ActionResult Search(string category){
+        public ActionResult Search(string kategori){
+            category();
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
              CloudConfigurationManager.GetSetting("ReceptConnection"));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("Recept");
-            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, category));
+
 
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             List<string> blobs = new List<string>();
 
+            if (string.IsNullOrEmpty(kategori))
+            {
+                TableQuery<Recept> query = new TableQuery<Recept>();
+                ViewBag.Recipedata = table.ExecuteQuery(query);
+
+                foreach (var blobItem in blobContainer.ListBlobs())
+                {
+                    blobs.Add(blobItem.Uri.ToString());
+                }
+                ViewBag.Blobs = blobs;
+                return View();
+            }
+            else
+            {
+
+
+                TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, kategori));
             ViewBag.Recipedata = table.ExecuteQuery(query);
-           // foreach (Recept entity in table.ExecuteQuery(query))
-           // {
-            //    Console.WriteLine("{0}, {1}\t{2}\t{3}", entity.PartitionKey, entity.RowKey,
-              //      entity, entity.PhoneNumber);
-           // }
+                foreach(var itemData in ViewBag.RecipeData){
+                   
             foreach (var blobItem in blobContainer.ListBlobs())
             {
+
+                    if (blobItem.Uri.ToString().Contains(itemData.blobnamn))
+                    {
                 blobs.Add(blobItem.Uri.ToString());
             }
+                }
+                
+                
+                }
             ViewBag.Blobs = blobs;
             return View();
         }
 
+        }
+
         public ActionResult DisplayRecipe(string RecipeName){
             ViewBag.In = RecipeName;
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+            CloudConfigurationManager.GetSetting("ReceptConnection"));
 
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("Recept");
+
+
+            CloudBlobContainer blobContainer = GetCloudBlobContainer();
+            List<string> blobs = new List<string>();
+            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal,RecipeName));
+            ViewBag.Recipedata = table.ExecuteQuery(query);
+            foreach (var itemData in ViewBag.RecipeData)
+            {
+                   
+            foreach (var blobItem in blobContainer.ListBlobs())
+            {
+
+                    if (blobItem.Uri.ToString().Contains(itemData.blobnamn))
+                    {
+                blobs.Add(blobItem.Uri.ToString());
+            }
+                }
+                
+                
+                }
+            ViewBag.Blobs = blobs;
 
             return View();
         }
