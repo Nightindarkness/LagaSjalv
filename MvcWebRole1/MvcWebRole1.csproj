@@ -208,6 +208,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Recept.cs" />
+    <Compile Include="Models\SaveRecipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
@@ -331,6 +332,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\DisplayRecipe.cshtml" />
     <Content Include="Views\Account\AdminPage.cshtml" />
+    <Content Include="Views\Home\MyRecipe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
