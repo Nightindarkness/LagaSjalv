@@ -116,7 +116,7 @@ namespace MvcWebRole1.Controllers
             ViewBag.mattenhet7 = new SelectList(matt1);
 
             if(!String.IsNullOrEmpty(kategori)){
-            
+
         }
            
             return View(blobs);
@@ -540,13 +540,13 @@ namespace MvcWebRole1.Controllers
             return "File Deleted";
         }
 
-        public ActionResult Search(){
+        public ActionResult Search(string category){
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
              CloudConfigurationManager.GetSetting("ReceptConnection"));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("Recept");
-            TableQuery<Recept> query = new TableQuery<Recept>();
+            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, category));
 
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             List<string> blobs = new List<string>();
@@ -562,6 +562,13 @@ namespace MvcWebRole1.Controllers
                 blobs.Add(blobItem.Uri.ToString());
             }
             ViewBag.Blobs = blobs;
+            return View();
+        }
+
+        public ActionResult DisplayRecipe(string RecipeName){
+            ViewBag.In = RecipeName;
+
+
             return View();
         }
 

@@ -1,19 +1,32 @@
-﻿@model IEnumerable<string>
+﻿@model MvcWebRole1.Models.Recept
 
 @{
     ViewBag.Title = "Search";
+     
 }
 
-<h2>Search</h2>
+<h2>Search</h2> @Html.DropDownList("kategori", "-Select Category-")
 
-
-    @foreach (var item in ViewBag.Blobs)
-    {   <img src="@item" alt="image here" width="300" height="300" />
-         foreach(var itemData in ViewBag.RecipeData){
-
-             var data = @Html.Raw(Json.Encode(itemData.mjolk));
-             <div>@data</div>
+    
+    
+    @foreach (var itemData in ViewBag.recipeData )
+    {   
+        int i = 0;
+       // var data = ViewBag.recipeData;
+        // <a>@item</a> 
+        <div style="border: 1px solid black">
+            <div>@Html.ActionLink((string)itemData.ReceptNamn, "DisplayRecipe", "Home", new { RecipeName = itemData.ReceptNamn }, null) </div>
+            @foreach (var item in ViewBag.Blobs)
+        {
+            if(item.Contains(itemData.blobnamn)){
+            <img src="@item" alt="image here" width="300" height="300" />
+            }
+             
+            
          }
         
         
+        <div>Beskrivning @itemData.mjolk @itemData.mjolkmatt</div>
+
+        </div>
     }
