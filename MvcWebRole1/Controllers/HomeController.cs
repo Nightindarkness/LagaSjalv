@@ -591,7 +591,32 @@ namespace MvcWebRole1.Controllers
 
         public ActionResult DisplayRecipe(string RecipeName){
             ViewBag.In = RecipeName;
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+            CloudConfigurationManager.GetSetting("ReceptConnection"));
 
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("Recept");
+
+
+            CloudBlobContainer blobContainer = GetCloudBlobContainer();
+            List<string> blobs = new List<string>();
+            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal,RecipeName));
+            ViewBag.Recipedata = table.ExecuteQuery(query);
+            foreach (var itemData in ViewBag.RecipeData)
+            {
+                   
+            foreach (var blobItem in blobContainer.ListBlobs())
+            {
+
+                    if (blobItem.Uri.ToString().Contains(itemData.blobnamn))
+                    {
+                blobs.Add(blobItem.Uri.ToString());
+            }
+                }
+                
+                
+                }
+            ViewBag.Blobs = blobs;
 
             return View();
         }
