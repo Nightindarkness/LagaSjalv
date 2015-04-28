@@ -14,6 +14,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 
 
 
+
 namespace MvcWebRole1.Controllers
 {
     public class HomeController : Controller
@@ -138,12 +139,12 @@ namespace MvcWebRole1.Controllers
         }
 
         [HttpPost]
-        public ActionResult upLoad(HttpPostedFileBase image, string instruktioner, string antal, string kategori, string receptnamn, string inloggningsnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1
+        public ActionResult upLoad(HttpPostedFileBase image, string instruktioner, string antal, string kategori, string receptnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1
             , string ingrediens2, string ingrediensmangd2, string mattenhet2, string ingrediens3, string ingrediensmangd3, string mattenhet3
             , string ingrediens4, string ingrediensmangd4, string mattenhet4, string ingrediens5, string ingrediensmangd5, string mattenhet5
             , string ingrediens6, string ingrediensmangd6, string mattenhet6, string ingrediens7, string ingrediensmangd7, string mattenhet7)
         {
-            string blobName = image.FileName + inloggningsnamn;
+            string blobName = Guid.NewGuid().ToString();
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             CloudBlockBlob blob = blobContainer.GetBlockBlobReference(blobName);
             blob.UploadFromStream(image.InputStream);
@@ -160,7 +161,7 @@ namespace MvcWebRole1.Controllers
             table.CreateIfNotExists();
 
             obj_Entity.ReceptNamn = receptnamn;
-            obj_Entity.Inloggnamn = inloggningsnamn;
+            obj_Entity.Inloggnamn = User.Identity.Name;
 
             /*------------------Ingrediens 1-------------------*/
             if (ingrediens1.Equals("Mjölk")){obj_Entity.mjolk = ingrediensmangd1;obj_Entity.mjolkmatt = mattenhet1;}
