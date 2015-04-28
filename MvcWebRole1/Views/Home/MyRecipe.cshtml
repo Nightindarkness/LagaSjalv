@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "MyRecipe";
-    var recNamn = ViewBag.receptnamn.ElementAt(0);
-    <a>@recNamn</a> 
+    
 }
 
 <h2>MyRecipe</h2>
@@ -11,8 +10,10 @@
     {   
         int i = 0;
        // var data = ViewBag.recipeData;
-         
-    // if(ViewBag.receptnamn.ElementAt(i).Equals(itemData.ReceptNamn)){  
+        foreach (var recept in (List<string>)ViewBag.recetpnamn)
+        {      
+            
+     if(recept.Equals(itemData.ReceptNamn)){  
       <div style="border: 1px solid black">
 
       <a href="@Url.Action("DisplayRecipe","Home", new { RecipeName = itemData.ReceptNamn }, null)">
@@ -36,8 +37,8 @@
             <input type ="submit" value="Spara i mina recept"  />
            }
         </div> 
- //}
-
+ }
+ }
         i++;
     }
           

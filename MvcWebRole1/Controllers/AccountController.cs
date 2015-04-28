@@ -30,6 +30,15 @@ namespace MvcWebRole1.Controllers
                 // Attempt to register the user
                 try
                 {
+                    if (!Roles.RoleExists("User"))
+                    {
+
+                        Roles.CreateRole("User");
+                    }
+                    if(!Roles.RoleExists("Admin"))
+                    {
+                        Roles.CreateRole("Admin");
+                    }
                     WebSecurity.CreateUserAndAccount(m.UserName, m.Password, propertyValues: new {Email = m.Email });
                     //Membership.CreateUser(m.UserName,m.Password,m.Email);
                     Roles.AddUserToRole(m.UserName, "User");
@@ -362,10 +371,8 @@ namespace MvcWebRole1.Controllers
 
         public ActionResult AdminPage()
         {
-           
-
-
-            ViewBag.users = Roles.GetUsersInRole("User");
+            
+            ViewBag.users = new SelectList(Roles.GetUsersInRole("User"));
 
             return View();
         }

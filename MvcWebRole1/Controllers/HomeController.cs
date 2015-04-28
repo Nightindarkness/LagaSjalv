@@ -11,6 +11,7 @@ using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using MvcWebRole1.Models;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using System.Diagnostics;
 
 
 
@@ -19,6 +20,7 @@ namespace MvcWebRole1.Controllers
 {
     public class HomeController : Controller
     {
+        
 
         public CloudBlobContainer GetCloudBlobContainer()
         {
@@ -651,28 +653,34 @@ namespace MvcWebRole1.Controllers
 
         public ActionResult myRecipe()
         {
+            
             CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
             CloudTableClient cloud_Table;
             CloudTable table;
+            CloudTable table2;
             
             
 
             cloud_Table = obj_Account.CreateCloudTableClient();
-            table = cloud_Table.GetTableReference("SaveRecipe");
+            table2 = cloud_Table.GetTableReference("SaveRecipe");
             table = cloud_Table.GetTableReference("Recept");
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             List<string> blobs = new List<string>();
             List<List<string>> reci = new List<List<string>>(); 
             TableQuery<SaveRecipe> queryinlogg = new TableQuery<SaveRecipe>().Where(TableQuery.GenerateFilterCondition("Inloggnamn", QueryComparisons.Equal, User.Identity.Name));
+            var myRec = table2.ExecuteQuery(queryinlogg);
             TableQuery<Recept> queryrecipe = new TableQuery<Recept>();
             var allRec = table.ExecuteQuery(queryrecipe);
-            var myRec = table.ExecuteQuery(queryinlogg);
+            
             List<string> values = new List<string>();
            
             foreach(var rec in myRec)
             {
                 foreach(var recItem in allRec){
-                if(recItem.ReceptNamn.Equals(rec.PartitionKey)){
+                    
+                    Trace.WriteLine("HEEEEELLLO" + recItem.ReceptNamn,"ddddd");
+                    if (rec.PartitionKey.Equals(recItem.ReceptNamn))
+                   {
                     foreach (var blobItem in blobContainer.ListBlobs())
                 {
 
@@ -681,7 +689,7 @@ namespace MvcWebRole1.Controllers
                         
                         //Tab.Where(TableQuery.GenerateFilterCondition("blobnamn", QueryComparisons.Equals,blobItem.Uri.ToString())));
                        // values.Add(recItem.blobnamn); //0
-                        values.Add(recItem.ReceptNamn);//1
+                        values.Add(rec.PartitionKey);//1
                         //values.Add(recItem.Instruktioner);//2
                         blobs.Add(blobItem.Uri.ToString());
                         //reci.Add(values);
@@ -689,11 +697,12 @@ namespace MvcWebRole1.Controllers
                 }
                 }
                 }
+            }
                // reci.ElementAt(0).ElementAt(0);
                 ViewBag.recetpnamn = values;
                 ViewBag.MyRecipes = allRec;
                 ViewBag.Blobs = blobs;
-            }
+            
             return View(); 
         }
 
