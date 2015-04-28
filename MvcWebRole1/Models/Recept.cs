@@ -19,7 +19,7 @@ namespace MvcWebRole1.Models
 
         public string ReceptNamn { get; set; }
         public string Inloggnamn { get; set; }
-        public string Kommentar { get; set; }
+        public string Instruktioner { get; set; }
 
         public string mjolk { get; set; }
         public string salt { get; set; }
@@ -78,7 +78,7 @@ namespace MvcWebRole1.Models
         public string svartpepparmatt { get; set; }
         public string currymatt { get; set; }
         public string smormatt { get; set; }
-        public string vetemjölmatt { get; set; }
+        public string vetemjolmatt { get; set; }
         public string rogmjolmatt { get; set; }
         public string vetemjolspecialmatt { get; set; }
         public string brodsirapmatt { get; set; }
