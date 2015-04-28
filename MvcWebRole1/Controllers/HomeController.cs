@@ -146,6 +146,8 @@ namespace MvcWebRole1.Controllers
 
             obj_Entity.ReceptNamn = receptnamn;
             obj_Entity.Inloggnamn = inloggningsnamn;
+
+
             if (ingrediens1.Equals("Mjölk"))
             {
                 obj_Entity.mjolk = ingrediensmangd1;
@@ -187,29 +189,53 @@ namespace MvcWebRole1.Controllers
             return "File Deleted";
         }
 
-        public ActionResult Search(string category){
+        public ActionResult Search(string kategori){
+            category();
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
              CloudConfigurationManager.GetSetting("ReceptConnection"));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("Recept");
-            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, category));
+           
 
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             List<string> blobs = new List<string>();
 
-            ViewBag.Recipedata = table.ExecuteQuery(query);
-           // foreach (Recept entity in table.ExecuteQuery(query))
-           // {
-            //    Console.WriteLine("{0}, {1}\t{2}\t{3}", entity.PartitionKey, entity.RowKey,
-              //      entity, entity.PhoneNumber);
-           // }
-            foreach (var blobItem in blobContainer.ListBlobs())
+            if (string.IsNullOrEmpty(kategori))
             {
-                blobs.Add(blobItem.Uri.ToString());
+                TableQuery<Recept> query = new TableQuery<Recept>();
+                ViewBag.Recipedata = table.ExecuteQuery(query);
+
+                foreach (var blobItem in blobContainer.ListBlobs())
+                {
+                    blobs.Add(blobItem.Uri.ToString());
+                }
+                ViewBag.Blobs = blobs;
+                return View();
             }
-            ViewBag.Blobs = blobs;
-            return View();
+            else
+            {
+
+
+                TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, kategori));
+                ViewBag.Recipedata = table.ExecuteQuery(query);
+                foreach(var itemData in ViewBag.RecipeData){
+                   
+                foreach (var blobItem in blobContainer.ListBlobs())
+                {
+
+                    if (blobItem.Uri.ToString().Contains(itemData.blobnamn))
+                    {
+                    blobs.Add(blobItem.Uri.ToString());
+                    }
+                }
+                
+                
+                }
+                ViewBag.Blobs = blobs;
+                return View();
+            }
+            
         }
 
         public ActionResult DisplayRecipe(string RecipeName){

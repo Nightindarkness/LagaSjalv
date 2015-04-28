@@ -5,7 +5,14 @@
      
 }
 
-<h2>Search</h2> @Html.DropDownList("kategori", "-Select Category-")
+ @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+    {
+    
+   <h2>Search</h2> @Html.DropDownList("kategori", "-Välj Kategori-")
+    
+   <input type="submit" value="Search" />
+    }
+
 
     
     
@@ -14,8 +21,9 @@
         int i = 0;
        // var data = ViewBag.recipeData;
         // <a>@item</a> 
-        <div style="border: 1px solid black">
-            <div>@Html.ActionLink((string)itemData.ReceptNamn, "DisplayRecipe", "Home", new { RecipeName = itemData.ReceptNamn }, null) </div>
+      <a href="@Url.Action("DisplayRecipe","Home", new { RecipeName = itemData.ReceptNamn }, null)">
+          <div style="border: 1px solid black">
+           
             @foreach (var item in ViewBag.Blobs)
         {
             if(item.Contains(itemData.blobnamn)){
@@ -28,5 +36,5 @@
         
         <div>Beskrivning @itemData.mjolk @itemData.mjolkmatt</div>
 
-        </div>
+        </div></a> 
     }
