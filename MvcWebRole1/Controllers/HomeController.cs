@@ -162,6 +162,7 @@ namespace MvcWebRole1.Controllers
 
             obj_Entity.ReceptNamn = receptnamn;
             obj_Entity.Inloggnamn = User.Identity.Name;
+            
 
             /*------------------Ingrediens 1-------------------*/
             if (ingrediens1.Equals("Mjölk")){obj_Entity.mjolk = ingrediensmangd1;obj_Entity.mjolkmatt = mattenhet1;}
@@ -620,6 +621,80 @@ namespace MvcWebRole1.Controllers
             ViewBag.Blobs = blobs;
 
             return View();
+        }
+
+        [HttpPost]
+        public void Save(string receptnamn)
+        {
+
+            CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
+            CloudTableClient cloud_Table;
+            CloudTable table;
+            SaveRecipe saverec = new SaveRecipe();
+            TableOperation insertOperation;
+
+            cloud_Table = obj_Account.CreateCloudTableClient();
+            table = cloud_Table.GetTableReference("SaveRecipe");
+            table.CreateIfNotExists();
+            
+
+            saverec.PartitionKey = receptnamn;
+            saverec.RowKey = Guid.NewGuid().ToString();
+            saverec.Inloggnamn = User.Identity.Name;
+
+            
+            insertOperation = TableOperation.Insert(saverec);
+            table.Execute(insertOperation);
+
+            
+        }
+
+        public ActionResult myRecipe()
+        {
+            CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
+            CloudTableClient cloud_Table;
+            CloudTable table;
+            
+            
+
+            cloud_Table = obj_Account.CreateCloudTableClient();
+            table = cloud_Table.GetTableReference("SaveRecipe");
+            table = cloud_Table.GetTableReference("Recept");
+            CloudBlobContainer blobContainer = GetCloudBlobContainer();
+            List<string> blobs = new List<string>();
+            List<List<string>> reci = new List<List<string>>(); 
+            TableQuery<SaveRecipe> queryinlogg = new TableQuery<SaveRecipe>().Where(TableQuery.GenerateFilterCondition("Inloggnamn", QueryComparisons.Equal, User.Identity.Name));
+            TableQuery<Recept> queryrecipe = new TableQuery<Recept>();
+            var allRec = table.ExecuteQuery(queryrecipe);
+            var myRec = table.ExecuteQuery(queryinlogg);
+            List<string> values = new List<string>();
+           
+            foreach(var rec in myRec)
+            {
+                foreach(var recItem in allRec){
+                if(recItem.ReceptNamn.Equals(rec.PartitionKey)){
+                    foreach (var blobItem in blobContainer.ListBlobs())
+                {
+
+                    if (blobItem.Uri.ToString().Contains(recItem.blobnamn))
+                    {
+                        
+                        //Tab.Where(TableQuery.GenerateFilterCondition("blobnamn", QueryComparisons.Equals,blobItem.Uri.ToString())));
+                       // values.Add(recItem.blobnamn); //0
+                        values.Add(recItem.ReceptNamn);//1
+                        //values.Add(recItem.Instruktioner);//2
+                        blobs.Add(blobItem.Uri.ToString());
+                        //reci.Add(values);
+                    }
+                }
+                }
+                }
+               // reci.ElementAt(0).ElementAt(0);
+                ViewBag.recetpnamn = values;
+                ViewBag.MyRecipes = allRec;
+                ViewBag.Blobs = blobs;
+            }
+            return View(); 
         }
 
        
