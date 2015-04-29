@@ -1,4 +1,5 @@
-﻿
+﻿ 
+
 @{
     ViewBag.Title = "upLoad";
 }
@@ -16,13 +17,15 @@
    <!--<input type="submit" value="upLoad" />-->
     }
 
-
-    @using (Html.BeginForm("upLoad", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+   
+    @using (Html.BeginForm("upLoad", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) 
     {
-        @Html.Label("Välj en kategori")
+            
+    @Html.Label("Välj en kategori")
     @Html.DropDownList("kategori", "-Kategori-")
     @Html.Label("Receptnamn")
     @Html.TextBox("receptnamn")
+    @Html.ValidationMessage("receptnamn");
      
    <div>    
     @Html.Label("Välj Ingrediens")
@@ -88,7 +91,7 @@
         <a  href="#" id="@item" onclick="deleteImage('@item');">Delete</a>
     }
 </ul>
-
+<
 <script>
     function deleteImage(item) {
         var url = "/Home/DeleteImage";
@@ -97,3 +100,4 @@
         });
     }
 </script>
+

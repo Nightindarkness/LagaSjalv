@@ -20,7 +20,10 @@ namespace MvcWebRole1.Controllers
 {
     public class HomeController : Controller
     {
-        
+        public void Home()
+        {
+            
+        }
 
         public CloudBlobContainer GetCloudBlobContainer()
         {
@@ -34,6 +37,7 @@ namespace MvcWebRole1.Controllers
             return blobContainer;
         }
 
+        
         public ActionResult upLoad(string kategori, string receptnamn, string inloggningsnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1, string antal, string image)
         {
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
@@ -140,12 +144,15 @@ namespace MvcWebRole1.Controllers
             ViewBag.kategori = new SelectList(kat);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
         public ActionResult upLoad(HttpPostedFileBase image, string instruktioner, string antal, string kategori, string receptnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1
             , string ingrediens2, string ingrediensmangd2, string mattenhet2, string ingrediens3, string ingrediensmangd3, string mattenhet3
             , string ingrediens4, string ingrediensmangd4, string mattenhet4, string ingrediens5, string ingrediensmangd5, string mattenhet5
             , string ingrediens6, string ingrediensmangd6, string mattenhet6, string ingrediens7, string ingrediensmangd7, string mattenhet7)
         {
+           
+
             string blobName = Guid.NewGuid().ToString();
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
             CloudBlockBlob blob = blobContainer.GetBlockBlobReference(blobName);
@@ -526,7 +533,7 @@ namespace MvcWebRole1.Controllers
             insertOperation = TableOperation.Insert(obj_Entity);
             table.Execute(insertOperation);
 
-            
+
             return RedirectToAction("upLoad");
         }
 

@@ -20,7 +20,7 @@ namespace MvcWebRole1.Models
 
     public class RegisterM
     {
-        [Required]
+        [Required(ErrorMessage = "Name is Requirde")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
@@ -34,9 +34,14 @@ namespace MvcWebRole1.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+       
+        [Required(ErrorMessage = "Email is Requirde")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email ")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                            @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                            @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                            ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
 
     }

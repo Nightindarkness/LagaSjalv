@@ -12,9 +12,9 @@
         <div style="float:left;width:15%;height:450px; background-color:#d3d3d3; padding:5px 5px 5px 5px">
         <nav>
                         <ul style="font-size: 1.3em;font-family: 'Open Sans', sans-serif;border: 1px solid black";>
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+                            <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                            <li>@Html.ActionLink("Search", "Search", "Home")</li>
                         </ul>
                     </nav>
             </div>
@@ -23,7 +23,8 @@
             </div>
     </div>
     <footer style="background-color:#FFA319; height: 100px;max-width: 960px;">@RenderPage("~/Views/Shared/_Footer.cshtml")</footer>
-      @Scripts.Render("~/bundles/jquery")
+
+       @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
   </body>
     
