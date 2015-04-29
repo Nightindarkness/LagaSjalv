@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcWebRole1.Models
 {
@@ -15,8 +16,8 @@ namespace MvcWebRole1.Models
 
         public Recept() { }
 
-      
 
+      
         public string ReceptNamn { get; set; }
         public string Inloggnamn { get; set; }
         public string Instruktioner { get; set; }
@@ -121,7 +122,7 @@ namespace MvcWebRole1.Models
         public string champinjonermatt { get; set; }
         public string kantarellermatt { get; set; }
 
-
+      
         public int antal { get; set; }
         public string blobnamn { get; set; }
     }

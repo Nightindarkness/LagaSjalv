@@ -1,34 +1,64 @@
 ﻿@model MvcWebRole1.Models.RegisterM
+
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
-
+@if (ViewData.ModelState.IsValid)
+    {
+        if(@ViewBag.UserName != null)
+        {
+            
+          <div >     UserName : @ViewBag.UserName
+              Password: ViewBag.Password
+              ConfirmPassword : ViewBag.ConfirmPassword
+            Email: @ViewBag.Email</div>
+            
+        }
+    } 
 @using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
+    @Html.ValidationSummary(true)
     <fieldset>
         <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.Label("Username")
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.Label("Password")
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.Label("ConfirmPassword")
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-            <li>
-                @Html.Label("Email")
-                @Html.TextBoxFor(m => m.Email)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
+ <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div> 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ConfirmPassword)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div> 
+         <p>
+             <input type="submit" value="Register" />
+        </p>
+
+        
+       
+       
     </fieldset>
+}
+
+@section Scripts 
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }

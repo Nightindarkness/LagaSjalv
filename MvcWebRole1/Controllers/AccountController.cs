@@ -12,6 +12,7 @@ using MvcWebRole1.Filters;
 using MvcWebRole1.Models;
 using System.Diagnostics;
 
+
 namespace MvcWebRole1.Controllers
 {
     [Authorize]
@@ -19,15 +20,21 @@ namespace MvcWebRole1.Controllers
     public class AccountController : Controller
     {
 
+        [AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
+        
         public ActionResult Register(RegisterM m)
         {
             Debug.WriteLine("HHELL"+ModelState.IsValid);
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
+                ViewBag.UserName = m.UserName;
+                ViewBag.Password = m.Password;
+                ViewBag.ConfirmPassword = m.ConfirmPassword;
+                ViewBag.Email = m.Email;
                 try
                 {
                     if (!Roles.RoleExists("User"))
@@ -63,7 +70,7 @@ namespace MvcWebRole1.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(); 
         }
 
         //
@@ -76,7 +83,8 @@ namespace MvcWebRole1.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("upLoad", "Home");
+                //return RedirectToLocal(returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
