@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace MvcWebRole1.Models
 {
-    public class Recept : TableEntity
+    public class Recept : TableEntity , IEnumerable
     {
       
 
@@ -125,6 +125,117 @@ namespace MvcWebRole1.Models
 
         public int antal { get; set; }
         public string blobnamn { get; set; }
+        
+        public IEnumerator GetEnumerator()
+        {
+            yield return this.ReceptNamn;        
+            yield return this.Inloggnamn;
+        yield return this.Instruktioner; 
+
+        yield return this.mjolk;
+        yield return this.salt ;
+            yield return this.agg;
+        yield return this.svartpeppar;
+        yield return this.curry;
+        yield return this.smor;
+        yield return this.vetemjol;
+         yield return this.rogmjol;
+        yield return this.vetemjolspecial;
+        yield return this.brodsirap;
+         yield return this.vispgradde ;
+        yield return this.choklad ;
+         yield return this.hallon ;
+         yield return this.matyogurt ;
+         yield return this.strosocker ;
+        yield return this.wokgronsaker;
+        yield return this.ris;
+        yield return this.potatis;
+         yield return this.kycklingfile ;
+         yield return this.honsbuljong;
+         yield return this.matlagningsgradde;
+        yield return this.cremefraiche;
+        yield return this.jast ;
+        yield return this.honung ;
+         yield return this.vatten ;
+         yield return this.graslok ;
+        yield return this.persilja ;
+         yield return this.krossadetomater;
+         yield return this.olivolja ;
+        yield return this.valmofron ;
+        yield return this.pasta ;
+        yield return this.ost ;
+         yield return this.strobrod ;
+         yield return this.lammkotletter ;
+         yield return this.lammfars ;
+        yield return this.rodlok ;
+        yield return this.gullok ;
+        yield return this.vitlok ;
+        yield return this.rosmarin ;
+         yield return this.citron ;
+        yield return this.rodvin ;
+        yield return this.vittvin ;
+        yield return this.schalottenlok ;
+        yield return this.oxfile ;
+        yield return this.lax ;
+       yield return this.spenat ;
+         yield return this.champinjoner;
+        yield return this.kantareller ;
+        
+                
+
+        yield return this.mjolkmatt;
+         yield return this.saltmatt ;
+         yield return this.aggmatt ;
+         yield return this.svartpepparmatt ;
+         yield return this.currymatt;
+         yield return this.smormatt ;
+         yield return this.vetemjolmatt ;
+        yield return this.rogmjolmatt;
+         yield return this.vetemjolspecialmatt ;
+        yield return this.brodsirapmatt;
+         yield return this.vispgraddematt ;
+         yield return this.chokladmatt;
+         yield return this.hallonmatt ;
+        yield return this.matyogurtmatt;
+        yield return this.strosockermatt ;
+        yield return this.wokgronsakermatt;
+        yield return this.rismatt;
+         yield return this.potatismatt ;
+        yield return this.kycklingfilematt ;
+        yield return this.honsbuljongmatt ;
+       yield return this.matlagningsgraddematt ;
+        yield return this.cremefraichematt;
+        yield return this.jastmatt ;
+        yield return this.honungmatt ;
+         yield return this.vattenmatt ;
+        yield return this.graslokmatt ;
+        yield return this.persiljamatt ;
+        yield return this.krossadetomatermatt;
+       yield return this.olivoljamatt ;
+        yield return this.valmofronmatt ;
+        yield return this.pastamatt ;
+        yield return this.ostmatt ;
+        yield return this.strobrodmatt ;
+         yield return this.lammkotlettermatt;
+       yield return this.lammfarsmatt;
+        yield return this.rodlokmatt ;
+         yield return this.gullokmatt ;
+        yield return this.vitlokmatt ;
+         yield return this.rosmarinmatt ;
+        yield return this.citronmatt ;
+         yield return this.rodvinmatt ;
+        yield return this.vittvinmatt;
+         yield return this.schalottenlokmatt ;
+        yield return this.oxfilematt ;
+        yield return this.laxmatt ;
+        yield return this.spenatmatt ;
+        yield return this.champinjonermatt;
+        yield return this.kantarellermatt;
+
+
+        yield return this.antal;
+        yield return this.blobnamn;
+        }
     }
 
     

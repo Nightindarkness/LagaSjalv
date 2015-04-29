@@ -15,7 +15,7 @@ using System.Diagnostics;
 namespace MvcWebRole1.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    
     public class AccountController : Controller
     {
 
