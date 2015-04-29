@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Data.Entity;
+using System.Collections;
 
 namespace MvcWebRole1.Models
 {
@@ -125,5 +126,7 @@ namespace MvcWebRole1.Models
         public int antal { get; set; }
         public string blobnamn { get; set; }
     }
+
+    
     
 }

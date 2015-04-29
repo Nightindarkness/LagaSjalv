@@ -23,6 +23,8 @@
             </div>
     </div>
     <footer style="background-color:#FFA319; height: 100px;max-width: 960px;">@RenderPage("~/Views/Shared/_Footer.cshtml")</footer>
+      @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
   </body>
     
 </html>

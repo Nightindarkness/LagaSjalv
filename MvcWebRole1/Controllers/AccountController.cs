@@ -369,12 +369,39 @@ namespace MvcWebRole1.Controllers
 
         private UserProfile db = new UserProfile();
 
-        public ActionResult AdminPage()
+        public ActionResult AdminPage(string Users)
         {
+            if (Users != null)
             
+            {
+                Roles.RemoveUserFromRoles(Users, Roles.GetRolesForUser(Users));
+                ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(Users); // deletes record from webpages_Membership table
+                ((SimpleMembershipProvider)Membership.Provider).DeleteUser(Users, true); 
+                    
+            }
             ViewBag.users = new SelectList(Roles.GetUsersInRole("User"));
-
+            ViewBag.role = new SelectList(Roles.GetAllRoles());
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult DeleteRole(string role){
+
+            if (role != null)
+            {
+                Roles.DeleteRole(role);
+            }
+
+           return RedirectToAction("AdminPage");
+        }
+
+        [HttpPost]
+        public ActionResult AddRole(string Add)
+        {
+            if(Add != null && !Roles.RoleExists(Add)){
+                Roles.CreateRole(Add);
+            }
+            return RedirectToAction("AdminPage");
         }
 
         #region Helpers

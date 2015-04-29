@@ -545,6 +545,7 @@ namespace MvcWebRole1.Controllers
         }
 
         public ActionResult Search(string kategori){
+            
             category();
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
              CloudConfigurationManager.GetSetting("ReceptConnection"));
@@ -626,7 +627,7 @@ namespace MvcWebRole1.Controllers
         }
 
         [HttpPost]
-        public void Save(string receptnamn)
+        public ActionResult Save(string receptnamn)
         {
 
             CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
@@ -647,7 +648,7 @@ namespace MvcWebRole1.Controllers
             
             insertOperation = TableOperation.Insert(saverec);
             table.Execute(insertOperation);
-
+           return RedirectToAction("Search");
             
         }
 
@@ -678,7 +679,7 @@ namespace MvcWebRole1.Controllers
             {
                 foreach(var recItem in allRec){
                     
-                    Trace.WriteLine("HEEEEELLLO" + recItem.ReceptNamn,"ddddd");
+                   
                     if (rec.PartitionKey.Equals(recItem.ReceptNamn))
                    {
                     foreach (var blobItem in blobContainer.ListBlobs())
@@ -702,7 +703,8 @@ namespace MvcWebRole1.Controllers
                 ViewBag.recetpnamn = values;
                 ViewBag.MyRecipes = allRec;
                 ViewBag.Blobs = blobs;
-            
+
+                
             return View(); 
         }
 
