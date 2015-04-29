@@ -6,7 +6,26 @@
 
  @using (Html.BeginForm("AdminPage", "Account", FormMethod.Get))
  {
-        @Html.DropDownList("Users","Välj användare")
-     
+        
+        <input type ="submit" value="Radera användare"  />
+
 
  }
+
+
+ @using (Html.BeginForm("DeleteRole", "Account", FormMethod.Post))
+ {
+        @Html.DropDownList("role","Välj Roll")
+        <input type ="submit" value="Radera roll"  />
+
+
+ }
+
+@using (Html.BeginForm("AddRole", "Account", FormMethod.Post))
+ {
+        @Html.TextBox("Add");
+        <input type ="submit" value="Lägg till roll"  />
+
+
+ }
+

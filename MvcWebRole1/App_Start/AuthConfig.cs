@@ -22,9 +22,9 @@ namespace MvcWebRole1
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "",
-            //    appSecret: "");
+          // OAuthWebSecurity.RegisterFacebookClient(
+             //  appId: "1580217085586485",
+            //   appSecret: "8369a1d26ea6cd63ea48e133bd1ddabe");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }
