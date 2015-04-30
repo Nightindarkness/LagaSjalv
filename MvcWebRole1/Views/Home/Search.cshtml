@@ -1,4 +1,4 @@
-﻿@model MvcWebRole1.Models.Recept
+﻿
 
 @{
     ViewBag.Title = "Search";
@@ -37,10 +37,15 @@
         
         </a>
         <div>Beskrivning  @itemData.Instruktioner</div>
-           @using (Html.BeginForm("Save", "Home", FormMethod.Post)){
+             @if (Request.IsAuthenticated) { 
+                            
+           using (Html.BeginForm("Save", "Home", FormMethod.Post)){
              
              @Html.Hidden("receptnamn", (object) itemData.ReceptNamn) 
+                 @Html.Hidden("blob", (object) itemData.blobnamn) 
             <input type ="submit" value="Spara i mina recept"  />
            }
+                  
+                             } 
         </div> 
     }

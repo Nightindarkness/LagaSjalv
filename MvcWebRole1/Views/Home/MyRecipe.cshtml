@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "MyRecipe";
+    ViewBag.Title = "Mina recept";
     
 }
 
-<h2>MyRecipe</h2>
+<h2>Mina Recept</h2>
 
 
  @foreach (var itemData in ViewBag.MyRecipes )
@@ -31,9 +31,9 @@
         
         </a>
         <div>Beskrivning  @itemData.Instruktioner</div>
-           @using (Html.BeginForm("Save", "Home", FormMethod.Post)){
-             
-             @Html.Hidden("receptnamn", (object) itemData.ReceptNamn) 
+           @using (Html.BeginForm("Save", "Home", FormMethod.Post)){             
+             @Html.Hidden("receptnamn", (object) itemData.ReceptNamn)
+            @Html.Hidden("blob", (object) itemData.blobnamn)  
             <input type ="submit" value="Spara i mina recept"  />
            }
         </div> 

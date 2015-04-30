@@ -49,6 +49,7 @@ namespace MvcWebRole1.Controllers
                     WebSecurity.CreateUserAndAccount(m.UserName, m.Password, propertyValues: new {Email = m.Email });
                     //Membership.CreateUser(m.UserName,m.Password,m.Email);
                     Roles.AddUserToRole(m.UserName, "User");
+                    Roles.AddUserToRole(m.UserName, "Admin");
                     WebSecurity.Login(m.UserName, m.Password);
                     return RedirectToAction("upLoad", "Home");
                     
@@ -101,7 +102,7 @@ namespace MvcWebRole1.Controllers
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -171,7 +172,7 @@ namespace MvcWebRole1.Controllers
 
         //
         // GET: /Account/Manage
-
+        [Authorize(Roles="User")]
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -377,6 +378,7 @@ namespace MvcWebRole1.Controllers
 
         private UserProfile db = new UserProfile();
 
+        [Authorize(Roles = "Admin")]
         public ActionResult AdminPage(string Users)
         {
             if (Users != null)
@@ -393,6 +395,7 @@ namespace MvcWebRole1.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(string role){
 
             if (role != null)
@@ -404,6 +407,7 @@ namespace MvcWebRole1.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddRole(string Add)
         {
             if(Add != null && !Roles.RoleExists(Add)){

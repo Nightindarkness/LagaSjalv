@@ -37,7 +37,53 @@ namespace MvcWebRole1.Controllers
             return blobContainer;
         }
 
-        
+        public ActionResult DeleteRecipe(string receptnamn)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+            CloudConfigurationManager.GetSetting("ReceptConnection"));
+            
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable saveTable = tableClient.GetTableReference("SaveRecipe");
+            CloudTable table = tableClient.GetTableReference("Recept");
+            TableQuery<Recept> query = new TableQuery<Recept>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, receptnamn));
+            var delete = table.ExecuteQuery(query);
+                foreach(var itemData in delete){
+                   
+                      
+
+                      CloudBlobContainer blobContainer = GetCloudBlobContainer();
+                      CloudBlockBlob blob = blobContainer.GetBlockBlobReference(itemData.blobnamn);
+
+                      blob.Delete();
+                      var entity = new DynamicTableEntity(itemData.PartitionKey, itemData.RowKey);
+                      entity.ETag = "*";
+                      table.Execute(TableOperation.Delete(entity));
+                      var saveEntity = new DynamicTableEntity(itemData.ReceptNamn, itemData.blobnamn);
+                      saveEntity.ETag = "*";
+                      saveTable.Execute(TableOperation.Delete(saveEntity));
+               
+            }
+                
+            
+            
+            
+            
+
+            // CloudStorageAccount obj_Account = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+            
+
+            return RedirectToAction("Search");
+        }
+
+
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Time()
+        {
+            return PartialView();
+        }
+
+        [Authorize(Roles = "User")]
         public ActionResult upLoad(string kategori, string receptnamn, string inloggningsnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1, string antal, string image)
         {
             CloudBlobContainer blobContainer = GetCloudBlobContainer();
@@ -146,6 +192,8 @@ namespace MvcWebRole1.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
+
+        [Authorize(Roles = "User")]
         public ActionResult upLoad(HttpPostedFileBase image, string instruktioner, string antal, string kategori, string receptnamn, string ingrediens1, string ingrediensmangd1, string mattenhet1
             , string ingrediens2, string ingrediensmangd2, string mattenhet2, string ingrediens3, string ingrediensmangd3, string mattenhet3
             , string ingrediens4, string ingrediensmangd4, string mattenhet4, string ingrediens5, string ingrediensmangd5, string mattenhet5
@@ -600,7 +648,7 @@ namespace MvcWebRole1.Controllers
         }
 
         }
-
+        [AllowAnonymous]
         public ActionResult DisplayRecipe(string RecipeName){
             ViewBag.In = RecipeName;
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
@@ -634,7 +682,7 @@ namespace MvcWebRole1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(string receptnamn)
+        public ActionResult Save(string receptnamn ,string blob)
         {
 
             CloudStorageAccount obj_Account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("ReceptConnection"));
@@ -649,7 +697,7 @@ namespace MvcWebRole1.Controllers
             
 
             saverec.PartitionKey = receptnamn;
-            saverec.RowKey = Guid.NewGuid().ToString();
+            saverec.RowKey = blob;
             saverec.Inloggnamn = User.Identity.Name;
 
             
@@ -659,6 +707,7 @@ namespace MvcWebRole1.Controllers
             
         }
 
+        [Authorize(Roles = "User")]
         public ActionResult myRecipe()
         {
             

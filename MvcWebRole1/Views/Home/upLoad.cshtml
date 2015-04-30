@@ -1,10 +1,10 @@
 ﻿ 
 
 @{
-    ViewBag.Title = "upLoad";
+    ViewBag.Title = "Ladda Upp";
 }
 
-<h2>upLoad</h2>
+<h2>Ladda upp</h2>
 <h2>@ViewBag.Message</h2>
 
 
@@ -84,20 +84,5 @@
         
     }
 
-<ul style ="list-style-type:none; padding:0;">
-    @foreach (var item in Model)
-    {   
-        <img src="@item" alt="image here" width="100" height="100" />
-        <a  href="#" id="@item" onclick="deleteImage('@item');">Delete</a>
-    }
-</ul>
-<
-<script>
-    function deleteImage(item) {
-        var url = "/Home/DeleteImage";
-        $.post(url, { Name: item }, function (data) {
-            window.location.href = "/Home/Upload";
-        });
-    }
-</script>
+
 

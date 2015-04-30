@@ -1,14 +1,14 @@
 ﻿@{
-    ViewBag.Title = "DisplayRecipe";
+    ViewBag.Title = "Visa Recept";
 }
 
-<h2>DisplayRecipe</h2>
+<h2>Visa Recept</h2>
 
 
 @foreach (var itemData in ViewBag.recipeData )
     {   
         int i = 0;
-       // var data = ViewBag.recipeData;
+       ViewBag.uploader = itemData.Inloggnamn;
        // <a>@item</a> 
         if(itemData.ReceptNamn != null && itemData.antal != null && itemData.Inloggnamn !=null){
         <div > @itemData.ReceptNamn för @itemData.antal personer</div>
@@ -171,5 +171,20 @@
              }
              if(itemData.Instruktioner != null){
         <div >Instruktioner: @itemData.Instruktioner </div>
+    
              }
+              if (Request.IsAuthenticated) {                            
+           using (Html.BeginForm("Save", "Home", FormMethod.Post)){
+               @Html.Hidden("receptnamn", (object) itemData.ReceptNamn) 
+             @Html.Hidden("blob", (object) itemData.blobnamn)             
+            <input type ="submit" value="Spara i mina recept"  />
+               }
+            }
+                             if(HttpContext.Current.User.IsInRole("Admin") || User.Identity.Name.Equals(ViewBag.uploader)){
+                                 using (Html.BeginForm("DeleteRecipe", "Home", FormMethod.Post)){
+                                   
+                                  @Html.Hidden("receptnamn", (object) itemData.ReceptNamn) 
+                                    <input type ="submit" value="Radera Recept"  />
+           }
+         }
     }
